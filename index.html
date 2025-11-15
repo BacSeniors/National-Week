@@ -62,7 +62,7 @@
 
     /* Scroll fix for sticky header */
     section {
-      scroll-margin-top: 100px; /* adjust to your header height */
+      scroll-margin-top: 100px; /* adjust to match header height */
     }
   </style>
 </head>
@@ -98,7 +98,7 @@
   </header>
 
   <!-- Mobile nav -->
-  <div id="mobileNav" class="max-h-0 bg-white border-b shadow-sm md:hidden reveal">
+  <div id="mobileNav" class="hidden bg-white border-b shadow-sm md:hidden reveal">
     <div class="max-w-6xl mx-auto px-6 py-3 flex flex-col gap-2">
       <a href="#about" class="py-2">About</a>
       <a href="#events" class="py-2">Events</a>
@@ -189,17 +189,11 @@
 
   <!-- Scripts -->
   <script>
-    // Mobile menu
+    // Mobile menu toggle
     const menuBtn = document.getElementById('menuBtn');
     const mobileNav = document.getElementById('mobileNav');
     menuBtn.addEventListener('click', () => {
-      if (mobileNav.classList.contains('max-h-0')) {
-        mobileNav.classList.remove('max-h-0');
-        mobileNav.classList.add('max-h-screen');
-      } else {
-        mobileNav.classList.remove('max-h-screen');
-        mobileNav.classList.add('max-h-0');
-      }
+      mobileNav.classList.toggle('hidden'); // show/hide mobile nav
     });
 
     // Reveal on scroll
