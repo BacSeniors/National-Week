@@ -67,28 +67,20 @@
 
     .hero-credit { font-size: 0.75rem; color: rgba(15,23,42,0.6); }
 
-    /* Video wrapper to hide Drive buttons */
+    /* Video wrapper for responsive fullscreen */
     .video-wrapper {
       position: relative;
       width: 100%;
       max-width: 900px;
       margin: auto;
+      aspect-ratio: 16/9;
     }
     .video-wrapper iframe {
       width: 100%;
-      height: 480px;
+      height: 100%;
       border: 0;
       border-radius: 1rem;
       box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-    }
-    .video-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 40px; /* hides Google Drive top bar */
-      pointer-events: none;
-      background: transparent;
     }
   </style>
 </head>
@@ -157,7 +149,7 @@
       <p class="hero-credit mt-2">by Simon Berchan</p>
     </section>
 
-    <!-- ABOUT (video with fullscreen enabled, Drive buttons hidden) -->
+    <!-- ABOUT (video with fullscreen enabled) -->
     <section id="about" class="mt-16 reveal">
       <div class="bg-white rounded-2xl p-6 card-shadow">
         <h3 class="text-2xl font-semibold mb-3">About Lebanon National Week</h3>
@@ -165,14 +157,15 @@
           Lebanon National Week is a student-led celebration honoring Lebanese culture, history and creativity.
         </p>
 
-        <!-- Video -->
+        <!-- FULLSCREEN-ENABLED VIDEO -->
         <div class="video-wrapper mt-6">
           <iframe 
             src="https://drive.google.com/file/d/178mE93WD3lc7oVjhVCOu6k6PXNHPvQs-/preview"
             allow="autoplay; fullscreen; encrypted-media"
             allowfullscreen
-          ></iframe>
-          <div class="video-overlay"></div>
+            webkitallowfullscreen
+            mozallowfullscreen>
+          </iframe>
         </div>
       </div>
     </section>
