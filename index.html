@@ -67,18 +67,24 @@
 
     .hero-credit { font-size: 0.75rem; color: rgba(15,23,42,0.6); }
 
-    /* Video responsive */
-    .video-wrapper { max-width: 900px; margin: 0 auto; }
-    .video-wrapper video,
-    .video-wrapper iframe {
-      width: 100%;
-      height: auto;
+    /* Vimeo responsive */
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
       border-radius: 1rem;
       box-shadow: 0 10px 30px rgba(2,6,23,0.06);
+      margin-top: 1.5rem;
     }
-
-    /* Status text */
-    .video-status { margin-top: 0.5rem; color: #6b7280; font-size: 0.9rem; text-align:center; }
+    .video-wrapper iframe {
+      position: absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      border:0;
+    }
   </style>
 </head>
 <body class="antialiased">
@@ -145,7 +151,7 @@
       <p class="hero-credit mt-2">by Simon Berchan</p>
     </section>
 
-    <!-- ABOUT (robust video: try HTML5 preview, fallback to iframe preview) -->
+    <!-- ABOUT (Vimeo video) -->
     <section id="about" class="mt-16 reveal">
       <div class="bg-white rounded-2xl p-6 card-shadow">
         <h3 class="text-2xl font-semibold mb-3">About Lebanon National Week</h3>
@@ -153,38 +159,14 @@
           Lebanon National Week is a student-led celebration honoring Lebanese culture, history and creativity.
         </p>
 
-        <div id="videoArea" class="video-wrapper mt-6">
-          <!-- Primary attempt: Drive preview stream that sometimes works in <video> -->
-          <video id="mainVideo"
-                 class="rounded-xl shadow-lg"
-                 controls
-                 playsinline
-                 webkit-playsinline
-                 x5-playsinline
-                 preload="metadata"
-                 style="display:block;">
-            <source src="https://drive.google.com/uc?export=preview&id=178mE93WD3lc7oVjhVCOu6k6PXNHPvQs-"
-                    type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-
-          <!-- Fallback: Drive iframe preview (reliable playback but Drive UI) -->
-          <div id="iframeFallback" style="display:none;">
-            <iframe
-              id="driveIframe"
-              src="https://drive.google.com/file/d/178mE93WD3lc7oVjhVCOu6k6PXNHPvQs-/preview"
-              width="100%"
-              height="480"
-              allow="autoplay; fullscreen; encrypted-media"
-              allowfullscreen
-              webkitallowfullscreen
-              mozallowfullscreen
-              class="rounded-xl shadow-lg"
-              title="Lebanon National Week Video (Drive)">
-            </iframe>
-          </div>
-
-          <p id="videoStatus" class="video-status" style="display:none;"></p>
+        <!-- Vimeo video -->
+        <div class="video-wrapper">
+          <iframe 
+            src="https://player.vimeo.com/video/1137461016?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+            allow="autoplay; fullscreen; picture-in-picture" 
+            allowfullscreen 
+            title="National Week Final Video">
+          </iframe>
         </div>
       </div>
     </section>
@@ -274,58 +256,14 @@
       });
     });
 
-    // Reveal on scroll
+    // Reveal items on scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('active');
       });
     }, { threshold: 0.12 });
+
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-
-    // Robust video logic: if <video> can't play, show iframe fallback
-    (function(){
-      const video = document.getElementById('mainVideo');
-      const iframeFallback = document.getElementById('iframeFallback');
-      const status = document.getElementById('videoStatus');
-      let metaLoaded = false;
-
-      function showFallback(reason) {
-        video.style.display = 'none';
-        iframeFallback.style.display = 'block';
-        status.style.display = 'block';
-        status.textContent = 'Using Drive preview fallback (reason: ' + reason + ').';
-      }
-
-      // If metadata loads, assume playable
-      video.addEventListener('loadedmetadata', () => {
-        metaLoaded = true;
-        status.style.display = 'block';
-        status.textContent = 'Playing direct stream (no Drive UI). Tap the video for fullscreen.';
-      }, { once: true });
-
-      // If there's a network/error, fallback
-      video.addEventListener('error', () => {
-        showFallback('video error');
-      });
-
-      // If not enough data/ready in a few seconds, fallback
-      const timeout = setTimeout(() => {
-        if (!metaLoaded || video.readyState < 2) {
-          showFallback('timed out loading');
-        }
-      }, 2500);
-
-      video.addEventListener('playing', () => clearTimeout(timeout));
-
-      // Mobile: attempt to request fullscreen on first tap (some mobile browsers need user gesture)
-      video.addEventListener('click', () => {
-        // if already in fullscreen, do nothing
-        if (document.fullscreenElement || document.webkitFullscreenElement) return;
-        if (video.requestFullscreen) video.requestFullscreen().catch(()=>{});
-        else if (video.webkitEnterFullscreen) video.webkitEnterFullscreen(); // iOS
-      });
-    })();
   </script>
 
 </body>
