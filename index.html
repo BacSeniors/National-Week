@@ -67,20 +67,12 @@
 
     .hero-credit { font-size: 0.75rem; color: rgba(15,23,42,0.6); }
 
-    /* Video wrapper for responsive fullscreen */
-    .video-wrapper {
-      position: relative;
+    /* Video responsive */
+    .video-wrapper video {
       width: 100%;
-      max-width: 900px;
-      margin: auto;
-      aspect-ratio: 16/9;
-    }
-    .video-wrapper iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
+      height: auto;
       border-radius: 1rem;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 30px rgba(2,6,23,0.06);
     }
   </style>
 </head>
@@ -142,14 +134,13 @@
 
       <div class="flex justify-center flex-wrap gap-3 mt-3">
         <a href="#events" class="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-[var(--cedar)] text-white font-semibold shadow hover:opacity-95 nav-link">See Events</a>
-
         <a href="#announce" class="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm hover:shadow nav-link">Announcements</a>
       </div>
 
       <p class="hero-credit mt-2">by Simon Berchan</p>
     </section>
 
-    <!-- ABOUT (video with fullscreen enabled) -->
+    <!-- ABOUT (video with fullscreen) -->
     <section id="about" class="mt-16 reveal">
       <div class="bg-white rounded-2xl p-6 card-shadow">
         <h3 class="text-2xl font-semibold mb-3">About Lebanon National Week</h3>
@@ -157,15 +148,15 @@
           Lebanon National Week is a student-led celebration honoring Lebanese culture, history and creativity.
         </p>
 
-        <!-- FULLSCREEN-ENABLED VIDEO -->
+        <!-- Fullscreen-enabled video -->
         <div class="video-wrapper mt-6">
-          <iframe 
-            src="https://drive.google.com/file/d/178mE93WD3lc7oVjhVCOu6k6PXNHPvQs-/preview"
-            allow="autoplay; fullscreen; encrypted-media"
-            allowfullscreen
-            webkitallowfullscreen
-            mozallowfullscreen>
-          </iframe>
+          <video 
+            src="https://drive.google.com/uc?export=download&id=178mE93WD3lc7oVjhVCOu6k6PXNHPvQs-"
+            controls
+            autoplay
+            playsinline
+            class="rounded-xl shadow-lg">
+          </video>
         </div>
       </div>
     </section>
